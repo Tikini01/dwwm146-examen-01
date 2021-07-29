@@ -1,18 +1,4 @@
-<?php
-    // user
-
-    $user = '';
-
-    $users = ["anthony","marc","loic","amanda","norbert","thierry","toma","tomg","michael","calvin","leng"];
-
-    if(isset($_GET['user']))
-    {
-        if(in_array($_GET['user'], $users))
-        {
-            $user = $_GET['user'];
-        }
-    }
-?><html>
+<html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

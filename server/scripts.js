@@ -81,4 +81,4 @@ function powerOFF()
     }
 }
 
-pid = setTimeout("receive();",1000);
+pid = setTimeout("receive();",500);

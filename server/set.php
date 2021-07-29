@@ -1,64 +1,47 @@
 <?php
-
-
-// user
-
-$user = '';
-
-$users = ["anthony","marc","loic","amanda","norbert","thierry","toma","tomg","michael","calvin","leng"];
-
-if(isset($_GET['user']))
-{
-    if(in_array($_GET['user'], $users))
-    {
-        $user = $_GET['user'];
-    }
-}
-
-// cmd
+header("Content-Type: text/plain");
 
 $cmd = '';
+$OK  = FALSE;
 
-if(isset($_POST['S11']))
+if(isset($_GET['S11']))
 {
-    if($_POST['S11'] == 1)
+    if($_GET['S11'] == 1)
     {
-        $cmd.="powerON();\n";
+        $cmd .= "powerON();\n";
+        $OK   = TRUE;
     }
 }
 
-if(isset($_POST['S10']))
+if(isset($_GET['S10']))
 {
-    if($_POST['S10'] == 1)
+    if($_GET['S10'] == 1)
     {
-        $cmd.="powerOFF();\n";
+        $cmd .= "powerOFF();\n";
+        $OK   = TRUE;
     }
 }
 
 for($i=1; $i<10; $i++)
 {
-    if(isset($_POST["S$i"]))
+    if(isset($_GET["S$i"]))
     {
-        if($_POST["S$i"] == 1)
+        if($_GET["S$i"] == 1)
         {
             $cmd .= "if(isON) {\n";
             $cmd .= "spot($i,'on');\n";
             $cmd .= "setTimeout(\"spot($i,'standby');\",500);\n";
             $cmd .= "}\n";
+            $OK   = TRUE;
         }
     }
 }
 
-error_log("$user : $cmd");
-
-if($user != '' && $cmd != '')
+if(file_put_contents("/tmp/spots.js",$cmd) !== FALSE && $OK == TRUE)
 {
-    if(file_put_contents("/tmp/spots.$user.js",$cmd) !== FALSE)
-    {
-        print('OK');
-    }
-    else
-    {
-        print('KO');
-    }
+    print('OK');
+}
+else
+{
+    print('KO');
 }
